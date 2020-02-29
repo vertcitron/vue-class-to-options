@@ -1,5 +1,6 @@
 import fs from 'fs'
 import chalk from 'chalk'
+import getOption from '../utils/getOption'
 
 export default class File {
   private path: string
@@ -35,6 +36,16 @@ export default class File {
     return result ? result[1] : ''
   }
 
+  get headerOptions () {
+    const result = this.script.replace(/^.*@Component\n/gs, '').replace(/export.*$/gs, '')
+    return `{\n${result}\n}`
+  }
+
+  get components () {
+    const result = getOption(this.headerOptions, 'components').split(',').map(item => item.trim()).join(', ')
+    return result ? `{ ${result} }` : ''
+  }
+
   private checkSFC () {
     if (!this.content.match(/<script.*export default.*<\/script>/gs)) {
       console.log(chalk.redBright('    The specified file does not seem to be a Vue component => exiting.\n'))
@@ -42,7 +53,7 @@ export default class File {
     }
   }
   private checkClassApi () {
-    if (!this.content.match(/@Component.*<script.*export default class.*<\/script>/gs)) {
+    if (!this.content.match(/@Component.*export default class.*<\/script>/gs)) {
       console.log(chalk.redBright('    The component does not seem to be written with Class API => exiting.\n'))
       process.exit(1)
     }
