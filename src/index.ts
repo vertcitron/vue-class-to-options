@@ -1,12 +1,14 @@
 import title from './display/title'
-import File from './class/File'
+import display from './display/block'
+import Component from './class/Component'
 import getArguments from './utils/getArguments'
 
 (async () => {
   await title('Class To Options', 'greenBright')
 
   const path = getArguments()
+  const component = new Component(path)
 
-  const component = new File(path)
-  console.log(component.content)
+  display('script :', component.script)
+  display('name :', component.name)
 })()
