@@ -26,5 +26,8 @@ export default (source: string, opens: string = '{', closes: string = '}') => {
   if (end === -1) {
     return ''
   }
-  return source.substring(start, end + 1)
+  if (end < start) {
+    return ''
+  }
+  return source.substring(start + 1, end)
 }
