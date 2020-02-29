@@ -11,6 +11,8 @@ import getArguments from './utils/getArguments'
 
   display('script :', component.script)
   display('name :', component.name)
-  display('components :', component.components)
-  display('header :', component.headerOptions)
+  for (const key in component.headerOptions) {
+    display(`${key}:`, component.headerOptions[key])
+  }
+  display ('components :', component.components)
 })()

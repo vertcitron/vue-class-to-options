@@ -1,6 +1,8 @@
 import fs from 'fs'
 import chalk from 'chalk'
 import getOption from '../utils/getOption'
+import reIndent from '../utils/reIndent'
+import getBlock from '../utils/getBlock'
 
 export default class File {
   private path: string
@@ -37,13 +39,23 @@ export default class File {
   }
 
   get headerOptions () {
-    const result = this.script.replace(/^.*@Component\n/gs, '').replace(/export.*$/gs, '')
-    return `{\n${result}\n}`
+    let result = this.script.replace(/^.*@Component\n/gs, '').replace(/export.*$/gs, '')
+    result = reIndent(result, 0)
+    const keys = result.match(/^[^ :}]*/gm)?.filter(item => item) || []
+    const options: any = {}
+    for (const key of keys) {
+      const value = `{${getBlock(result.substring(result.indexOf(key)))}}`
+      Object.defineProperty(options, key, {
+        value,
+        enumerable: true
+      })
+    }
+    return options
   }
 
   get components () {
-    const result = getOption(this.headerOptions, 'components').split(',').map(item => item.trim()).join(', ')
-    return result ? `{ ${result} }` : ''
+    const list = (this.headerOptions?.components || '').replace(/[{}]/gm, '').split(',').map((item: string) => item.trim())
+    return `{ ${list.join(', ')} }`
   }
 
   private checkSFC () {

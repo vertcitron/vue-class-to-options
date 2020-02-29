@@ -1,5 +1,9 @@
+const trimTopBottom = (source: string): string => {
+  return source.replace(/^\n/gs, '').replace(/\n$/gs, '')
+}
+
 export default (source: string, indent: number): string => {
-  const lines: string[] = source.split('\n')
+  const lines: string[] = trimTopBottom(source).split('\n')
   if (lines.length === 0) {
     return ''
   }
@@ -12,5 +16,5 @@ export default (source: string, indent: number): string => {
     const trimmed = line.trim()
     output.push(trimmed ? ' '.repeat(indent + delta) + trimmed : '')
   }
-  return output.join('\n')
+  return trimTopBottom(output.join('\n'))
 }
