@@ -1,5 +1,6 @@
 import { mockProcessExit, mockConsoleLog } from 'jest-mock-process'
 import Component from './Component'
+import Script from './Script'
 
 import noClassApi from '../tests/component/noClasApi'
 import validClassApi from '../tests/component/ValidClassApi'
@@ -66,7 +67,7 @@ describe ('Component class', () => {
 
   it ('Should return the script part.', () => {
     const component = new Component(basicSource)
-    expect(component.script).toBe(basicScriptExpected)
+    expect(component.script instanceof Script).toBeTruthy()
   })
 
   it ('Should return the text after the script part.', () => {

@@ -1,9 +1,11 @@
 import chalk from 'chalk'
 import reIndent from '../utils/reIndent'
 import getBlock from '../utils/getBlock'
+import Script from './Script'
 
 export default class File {
   readonly content: string
+  readonly script: Script
 
   constructor (content: string) {
     if (!content.trim()) {
@@ -13,6 +15,7 @@ export default class File {
     this.content = content
     this.checkSFC()
     this.checkClassApi()
+    this.script = new Script(content)
   }
 
   get before (): string {
@@ -20,43 +23,9 @@ export default class File {
     return result || ''
   }
 
-  get script (): string {
-    const result = this.content
-      .replace(/^.*<script[^>]*>\n/gs, '')
-      .replace(/\n<\/script>.*$/gs, '')
-    
-    return result ? reIndent(result, 0) : ''
-  }
-
   get after (): string {
     const result = this.content.replace(/^.*<\/script>/gs, '').trim()
     return result || ''
-  }
-
-  get name () {
-    const exp = /export default class (.*) extends Vue/gs
-    const result = exp.exec(this.script)
-    return result ? result[1] : ''
-  }
-
-  get headerOptions () {
-    let result = this.script.replace(/^.*@Component\n/gs, '').replace(/export.*$/gs, '')
-    result = reIndent(result, 0)
-    const keys = result.match(/^[^ :}]*/gm)?.filter(item => item) || []
-    const options: any = {}
-    for (const key of keys) {
-      const value = `{${getBlock(result.substring(result.indexOf(key)))}}`
-      Object.defineProperty(options, key, {
-        value,
-        enumerable: true
-      })
-    }
-    return options
-  }
-
-  get components () {
-    const list = (this.headerOptions?.components || '').replace(/[{}]/gm, '').split(',').map((item: string) => item.trim())
-    return `{ ${list.join(', ')} }`
   }
 
   private checkSFC () {
