@@ -1,22 +1,22 @@
-import fs from 'fs'
 import chalk from 'chalk'
-import getOption from '../utils/getOption'
 import reIndent from '../utils/reIndent'
 import getBlock from '../utils/getBlock'
 
 export default class File {
-  private path: string
-  public content: string
+  readonly content: string
 
-  constructor (path: string) {
-    this.path = path
-    this.content = fs.readFileSync(path, 'utf8')
+  constructor (content: string) {
+    if (!content.trim()) {
+      console.log(chalk.redBright('    This component file seems to be empty => exiting.'))
+      process.exit(1)
+    }
+    this.content = content
     this.checkSFC()
     this.checkClassApi()
   }
 
   get before (): string {
-    const result = this.content.replace(/@Component.*$/gs, '').trim()
+    const result = this.content.replace(/<script.*$/gs, '').trim()
     return result || ''
   }
 
@@ -24,7 +24,8 @@ export default class File {
     const result = this.content
       .replace(/^.*<script[^>]*>\n/gs, '')
       .replace(/\n<\/script>.*$/gs, '')
-    return result || ''
+    
+    return result ? reIndent(result, 0) : ''
   }
 
   get after (): string {

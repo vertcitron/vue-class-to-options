@@ -33,20 +33,15 @@ describe ('File class test', () => {
   })
 
   it('Should return the given file content if it exists', () => {
-    mock({
-      'basicComponent.vue': 'basic content'
-    })
     const mockExit = mockProcessExit()
-    const file = new File('basicComponent.vue')
+    const file = new File('./src/tests/file/basicFile.vue')
     expect(file.content).toBe('basic content')
-    mock.restore()
   })
 
   it('Should return a multiline file.', () => {
-    const path = './tests/file/multiline.vue'
+    const path = './src/tests/file/multiline.vue'
     const file = new File(path)
     const expected = readFileSync(path, 'utf-8')
     expect(file.content).toBe(expected)
-    mock.restore()
   })
 })
