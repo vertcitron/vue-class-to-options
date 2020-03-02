@@ -2,10 +2,12 @@ import chalk from 'chalk'
 import reIndent from '../utils/reIndent'
 import getBlock from '../utils/getBlock'
 import Script from './Script'
+import Props from './Props'
 
 export default class File {
   readonly content: string
   readonly script: Script
+  readonly props: Props
 
   constructor (content: string) {
     if (!content.trim()) {
@@ -16,6 +18,7 @@ export default class File {
     this.checkSFC()
     this.checkClassApi()
     this.script = new Script(content)
+    this.props = new Props(this.script.raw)
   }
 
   get before (): string {

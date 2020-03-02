@@ -43,4 +43,35 @@ describe ('Script class', () => {
     const script = new Script(multilinedSource)
     expect(script.headerOptions instanceof HeaderOptions).toBeTruthy()
   })
+
+  it ('Should return empty statics if not given', () => {
+    expect(new Script(
+`<script>
+</script>`
+    ).static).toBe('')
+
+    expect(new Script(
+`<script>
+  import A from './A'
+</script>`
+    ).static).toBe('')
+
+    expect(new Script(
+`<script>
+  import A from './A'
+  @Component
+</script>`
+    ).static).toBe(`import A from './A'`)
+
+    expect(new Script(
+`<script>
+  import A from './A'
+  import B from './B'
+  @Component
+</script>`
+    ).static).toBe(
+`import A from './A'
+import B from './B'`
+)
+  })
 })

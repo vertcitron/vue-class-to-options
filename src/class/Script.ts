@@ -22,6 +22,12 @@ export default class Script {
     return result ? result[1] : ''
   }
 
+  get static (): string {
+    const exp = /^(.*)@Component/gs
+    const output = exp.exec(this.raw)
+    return output ? reIndent(output[1], 0).trim() : ''
+  }
+
   get headerOptions (): HeaderOptions {
     return new HeaderOptions(this.raw)
   }
