@@ -5,35 +5,47 @@ const emptyHeader =
 export default`
 
 const basicHeader =
-`@Component
+`@Component({
   basic: 'something'
-  content: {
+  object: {
     sub1: 'something',
     sub2: 'other thing'
-  }
+  },
+  object2: { sub1: 'something', sub2: 'something' },
+  array: ['aaa', 'bbb']
+})
 export default`
 
 const basicHeaderRaw =
 `basic: 'something'
-content: {
+object: {
   sub1: 'something',
   sub2: 'other thing'
-}`
+},
+object2: { sub1: 'something', sub2: 'something' },
+array: ['aaa', 'bbb']`
 
 const basicOptions = {
   basic: 'something',
-  content: `{
-    sub1: 'something',
-    sub2: 'other thing'
-  }`
+  object: `{
+  sub1: 'something',
+  sub2: 'other thing'
+}`,
+  object2: `{
+  sub1: 'something', sub2: 'something'
+}`,
+  array: `[
+  'aaa', 'bbb'
+]`
 }
 
 const structuredHeader =
-`@Component
-components: {
-  Component1,
-  Component2
-}
+`@Component({
+  components: {
+    Component1,
+    Component2
+  }
+})
 export default`
 
 describe ('HeaderOptions class.', () => {

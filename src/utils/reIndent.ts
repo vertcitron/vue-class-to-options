@@ -12,7 +12,7 @@ export default (source: string, indent: number): string => {
   const output: string[] = []
   for (const line of lines) {
     const now = line.replace(/[^\s].*$/, '').length
-    const delta = now - original
+    const delta = Math.max(now - original, 0)
     const trimmed = line.trim()
     output.push(trimmed ? ' '.repeat(indent + delta) + trimmed : '')
   }

@@ -1,4 +1,5 @@
 import title from './display/title'
+import display from './display/displayOption'
 import Component from './class/Component'
 import File from './class/File'
 import chalk from 'chalk'
@@ -11,24 +12,14 @@ import chalk from 'chalk'
   const file = new File(path)
   const component = new Component(file.content)
 
-  console.log(chalk.cyan('Source :'))
-  console.log(component.content)
-  console.log()
-
-  console.log(chalk.cyan('Component name :'))
-  console.log(component.script.name)
-  console.log()
+  display('Component name :', component.script.name)
   
-  console.log(chalk.cyan('Static imports and constants :'))
-  console.log(component.script.static)
-  console.log()
+  display('Static imports and constants :', component.script.static)
   
-  console.log(chalk.cyan('Child components :'))
-  console.log(component.script.headerOptions.components)
-  console.log()
+  display('Child components :', component.script.headerOptions.components)
 
-  console.log(chalk.cyan('Props :'))
-  console.log(component.props.propsString)
-  console.log()
+  display('Header options :', component.script.headerOptions.options)
+
+  display('Props :', component.props.propsString)
 
 })()
