@@ -15,7 +15,8 @@ ed
 source`
 
 const multilineUnchunked2 =
-`The ed
+`The 
+ed
 source`
 
 describe ('Remove Chunk function tests.', () => {
