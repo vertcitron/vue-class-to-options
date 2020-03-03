@@ -3,6 +3,7 @@ import isValidSFC from './isValidSFC'
 const complexValidSFC = `
 <template>
   <div class="component">{{ message }}</div>
+  <script src='aaa'></script>
 </template>
 
 <script lang="ts>

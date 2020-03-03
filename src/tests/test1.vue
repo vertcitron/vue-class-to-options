@@ -21,6 +21,7 @@
         :total-entries="totalEntries"
       />
     </div>
+    <script src="aaa"></script>
   </div>
 </template>
 
