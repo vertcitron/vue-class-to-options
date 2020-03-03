@@ -55,6 +55,12 @@
   export default class HeaderPrimaryRight extends Vue {
     @Prop({ type: Boolean, default: false }) isScrolled: boolean;
 
+    @Prop()
+    numberOfEntries: number;
+
+    @Prop({ default: 'small' })
+    size: string;
+
     protected numberOfCartEntries: number;
 
     protected cartEntries: CartEntry[];
