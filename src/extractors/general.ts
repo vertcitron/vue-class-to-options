@@ -5,13 +5,15 @@ export interface General {
   inner: string
   name: string
   attrs: string
+  semi: boolean
 }
 
 export default (source: string): General => {
   const output: General = {
     inner: '',
     name: '',
-    attrs: ''
+    attrs: '',
+    semi: false
   }
 
   const searchAttrs = /<script\s+([^>]*)\s*>/gs.exec(source)
@@ -27,6 +29,10 @@ export default (source: string): General => {
   const block = getBlock(source)
   output.inner = reIndent(block, 0)
   
+  const lines = source.replace(/<script[^>]*>/, '').replace(/<\/script>/, '').trim().split('\n')
+  for (const line of lines) {
+    if (line.match(/;\s*$/)) output.semi = true
+  }
 
   return output  
 }

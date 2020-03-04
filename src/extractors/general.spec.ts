@@ -20,8 +20,8 @@ get user () {
 
 describe ('general.spec unit tests.', () => {
   it ('Should return empty if nothing given.', () => {
-    expect(general('')).toStrictEqual({ inner: '', name: '', attrs: '' })
-    expect(general('\n  \n')).toStrictEqual({ inner: '', name: '', attrs: '' })
+    expect(general('')).toStrictEqual({ inner: '', name: '', attrs: '', semi: false })
+    expect(general('\n  \n')).toStrictEqual({ inner: '', name: '', attrs: '', semi: false })
   })
 
   it ('Should return the good name in different conditions .', () => {
@@ -44,5 +44,16 @@ describe ('general.spec unit tests.', () => {
     expect(general('export default class Name extends Vue {content}').inner).toBe('content')
     expect(general('export default class Name extends Vue {\n  content \n   line2}').inner).toBe('content\n line2')
     expect(general(source).inner).toBe(output)
+  })
+
+  it ('Should return the good semi flag.', () => {
+    expect(general('').semi).toBeFalsy()
+    expect(general('<script>\ncontent</script>').semi).toBeFalsy()
+    expect(general('<script>\ncontent;</script>').semi).toBeTruthy()
+    expect(general('<script>\ncontent\n</script>').semi).toBeFalsy()
+    expect(general('<script>\ncontent;\n</script>').semi).toBeTruthy()
+    expect(general('<script>\ncontent\ncontent;\n</script>').semi).toBeTruthy()
+    expect(general(source).semi).toBeFalsy()
+    const source2 = source.replace('return', 'return;')
   })
 })

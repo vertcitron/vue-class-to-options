@@ -55,6 +55,7 @@ const clean = (source: string): string => {
 
   display('Name :', generals.name)
   display('Script attributes :', generals.attrs)
+  display('Has semicolons :', generals.semi)
   display('Statics :', statics)
   display('Components :', header.components)
   display('Head Options :', header.options)
