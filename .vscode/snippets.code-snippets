@@ -31,13 +31,24 @@
 		"scope": "typescript",
 		"prefix": "spec",
 		"body": [
-			"import function from './function'",
+			"import $TM_FILENAME_BASE from './$TM_FILENAME_BASE'",
 			"",
-			"describe ('Tests.', () => {",
-			"  it ('Test title.', () => {",
-			"    $0",
-			"  }",
-			"}",
+			"describe ('$TM_FILENAME_BASE unit tests.', () => {",
+			"  it ('Should return $0 if .', () => {",
+			"    expect($TM_FILENAME_BASE('').toBe('')",
+			"  })",
+			"})",
+			""
+		]
+	},
+
+	"Function Spec Test": {
+		"scope": "typescript",
+		"prefix": "it",
+		"body": [
+			"  it ('Should return $0 if .', () => {",
+			"    expect($TM_FILENAME_BASE('').toBe('')",
+			"  })",
 			""
 		]
 	}

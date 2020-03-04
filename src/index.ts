@@ -1,8 +1,5 @@
 import title from './display/title'
 import display from './display/displayOption'
-import Component from './class/Component'
-import File from './class/File'
-import chalk from 'chalk'
 import isValidPath from './validators/isValidPath'
 import readFile from './utils/readFile'
 import isValidSFC from './validators/isValidSFC'
@@ -11,6 +8,7 @@ import removeChunk from './utils/removeChunk'
 import script from './extractors/script'
 import staticImports from './extractors/staticImports'
 import reIndent from './utils/reIndent'
+import componentOptions from './extractors/componentOptions'
 
 const clean = (source: string): string => {
   return reIndent(source, 0).trim()
@@ -37,22 +35,12 @@ const clean = (source: string): string => {
   let statics = staticImports(remains)
   remains = removeChunk(remains, statics)
   statics = clean(statics)
+  let header = componentOptions(remains)
+  remains = removeChunk(remains, header.raw)
 
   display('Statics :', statics)
+  display('Components :', header.components)
+  display('Options :', header.options)
   display('Remains :', remains)
-
-
-  // const file = new File(filePath)
-  // const component = new Component(file.content)
-
-  // display('Component name :', component.script.name)
-  
-  // display('Static imports and constants :', component.script.static)
-  
-  // display('Child components :', component.script.headerOptions.components)
-
-  // display('Header options :', component.script.headerOptions.options)
-
-  // display('Props :', component.props.propsString)
 
 })()
