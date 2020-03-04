@@ -9,6 +9,7 @@ import script from './extractors/script'
 import staticImports from './extractors/staticImports'
 import reIndent from './utils/reIndent'
 import componentOptions from './extractors/componentOptions'
+import general from './extractors/general'
 
 const clean = (source: string): string => {
   return reIndent(source, 0).trim()
@@ -38,9 +39,15 @@ const clean = (source: string): string => {
   let header = componentOptions(remains)
   remains = removeChunk(remains, header.raw)
 
+  // general setup extraction
+  let generals = general(remains)
+  remains = generals.inner
+
+  display('Name :', generals.name)
+  display('Script attributes :', generals.attrs)
   display('Statics :', statics)
   display('Components :', header.components)
-  display('Options :', header.options)
+  display('Head Options :', header.options)
   display('Remains :', remains)
 
 })()
