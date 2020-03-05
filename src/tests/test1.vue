@@ -1,26 +1,7 @@
 <template>
-  <div class="primary-header-right">
-    <div class="header__user">
-      <UserInfo />
-    </div>
-    <div
-      class="minicart-wrapper"
-      :class="{
-        active: isMinicartOverlayActive,
-        scrolled: isScrolled,
-      }"
-    >
-      <Minicart
-        class="minicart"
-        :number-of-entries="numberOfCartEntries"
-        :size="componentSize"
-      />
-      <MinicartOverlay
-        class="minicart-overlay"
-        :entries="cartEntries"
-        :total-entries="totalEntries"
-      />
-    </div>
+  <div class="component">
+    {{ message }}
+    <button @click="handleClick"></button>
     <script src="aaa"></script>
   </div>
 </template>
@@ -29,23 +10,16 @@
   import Vue from 'vue';
   import { Component, Prop } from 'vue-property-decorator';
   import { mapGetters } from 'vuex';
-
-  import { CartEntry } from '@/models/checkout/cart/cart';
   import Minicart from '@/components/molecules/minicart/Minicart.vue';
-  import MinicartOverlay from '@/components/molecules/minicart-overlay/MinicartOverlay.vue';
   import UserInfo from '@/components/organisms/user-info/UserInfo.vue';()
 
   @Component({
     components: {
       UserInfo,
-      Minicart,
-      MinicartOverlay
+      Minicart
     },
     computed: {
       ...mapGetters({
-        numberOfCartEntries: 'cart/getNumberOfEntries',
-        cartEntries: 'cart/getEntries',
-        totalEntries: 'cart/totalEntries',
         isMobile: 'breakpoint/isMobile',
         isTablet: 'breakpoint/isTablet'
       })
@@ -53,7 +27,7 @@
     test: 'something',
     test2: ['aaa', 'bbb']
   })
-  export default class HeaderPrimaryRight extends Vue {
+  export default class MyComponent extends Vue {
     @Prop({ type: Boolean, default: false }) isScrolled: boolean;
 
     @Prop()
@@ -62,27 +36,23 @@
     @Prop({ default: 'small' })
     size: string;
 
-    protected numberOfCartEntries: number;
-
-    protected cartEntries: CartEntry[];
-
     protected isTablet: boolean;
-
     protected isMobile: boolean;
 
     get componentSize(): string {
-      switch (true) {
-        case this.isMobile:
-          return 'small';
-        case this.isTablet:
-          return 'medium';
-        default:
-          return 'full';
+      if (this.isMobile) {
+        return 'small';
       }
+      if (this.isTablet) return 'medium';
+      return 'full';
     }
 
     get isMinicartOverlayActive(): boolean {
       return !!this.numberOfCartEntries;
+    }
+
+    handleClick() {
+      this.$emit('button-clicked');
     }
   }
 </script>

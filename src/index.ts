@@ -11,6 +11,7 @@ import reIndent from './utils/reIndent'
 import componentOptions from './extractors/componentOptions'
 import general from './extractors/general'
 import props from './extractors/props'
+import computed from './extractors/computed'
 
 const clean = (source: string): string => {
   return reIndent(source, 0).trim()
@@ -53,6 +54,12 @@ const clean = (source: string): string => {
   }
   componentProps.replace(/,\n$/, '')
 
+  // computeds extraction
+  let computedProps = computed(remains)
+  for (const chunk of computedProps.chunks) {
+    remains = removeChunk(remains, chunk).trim()
+  }
+
   display('Name :', generals.name)
   display('Script attributes :', generals.attrs)
   display('Has semicolons :', generals.semi)
@@ -60,6 +67,7 @@ const clean = (source: string): string => {
   display('Components :', header.components)
   display('Head Options :', header.options)
   display('Props :', componentProps)
+  display('Computed properties :', computedProps.block)
   display('Remains :', remains)
 
 })()
