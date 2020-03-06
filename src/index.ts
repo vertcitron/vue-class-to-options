@@ -50,15 +50,13 @@ const clean = (source: string): string => {
   let componentProps = ''
   for (const prop of propsList) {
     componentProps += prop.line + ',\n'
-    remains = removeChunk(remains, prop.raw).trim()
+    remains = removeChunk(remains, prop.raw)
   }
   componentProps.replace(/,\n$/, '')
 
   // computeds extraction
   let computedProps = computed(remains)
-  for (const chunk of computedProps.chunks) {
-    remains = removeChunk(remains, chunk).trim()
-  }
+  remains = removeChunk(remains, computedProps.chunks)
 
   display('Name :', generals.name)
   display('Script attributes :', generals.attrs)
