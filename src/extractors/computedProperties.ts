@@ -1,6 +1,6 @@
 import getBlock from "../utils/getBlock"
 import reIndent from "../utils/reIndent"
-import { HeaderOptions } from './headerOptions'
+import { HeaderOptions } from './componentHeader'
 
 export interface Computeds {
   chunks: string[]

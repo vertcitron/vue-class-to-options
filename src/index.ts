@@ -8,7 +8,7 @@ import removeChunk from './utils/removeChunk'
 import script from './extractors/script'
 import staticImports from './extractors/staticImports'
 import reIndent from './utils/reIndent'
-import componentOptions from './extractors/headerOptions'
+import componentHeader from './extractors/componentHeader'
 import general from './extractors/general'
 import propDecorators from './extractors/propDecorators'
 import computedProperties from './extractors/computedProperties'
@@ -24,34 +24,34 @@ const clean = (source: string): string => {
   const filePath = process.argv[2] || ''
   if (!isValidPath(filePath)) process.exit(1)
   const original = readFile(filePath)
-  let remains = original
+  let unprocessed = original
   if (!isValidSFC(original)) process.exit(1)
 
   // Component root tags extraction
   const before = beforeScript(original)
-  remains = removeChunk(remains, before).trim()
-  const component = script(remains)
-  const after = removeChunk(remains, component).trim()
-  remains = component
+  unprocessed = removeChunk(unprocessed, before).trim()
+  const component = script(unprocessed)
+  const after = removeChunk(unprocessed, component).trim()
+  unprocessed = component
 
   // statics extraction
-  let statics = staticImports(remains)
-  remains = removeChunk(remains, statics)
+  let statics = staticImports(unprocessed)
+  unprocessed = removeChunk(unprocessed, statics)
   statics = clean(statics)
-  let header = componentOptions(remains)
-  remains = removeChunk(remains, header.raw)
+  let header = componentHeader(unprocessed)
+  unprocessed = removeChunk(unprocessed, header.chunks)
 
   // general setup extraction
-  let generals = general(remains)
-  remains = generals.inner
+  let generals = general(unprocessed)
+  unprocessed = generals.inner
 
   // props extraction
-  let props = propDecorators(remains)
-  remains = removeChunk(remains, props.chunks)
+  let props = propDecorators(unprocessed)
+  unprocessed = removeChunk(unprocessed, props.chunks)
 
   // computeds extraction
-  let computedProps = computedProperties(remains, header.options)
-  remains = removeChunk(remains, computedProps.chunks)
+  let computedProps = computedProperties(unprocessed, header.options)
+  unprocessed = removeChunk(unprocessed, computedProps.chunks)
 
   display('Name :', generals.name)
   display('Script attributes :', generals.attrs)
@@ -61,6 +61,6 @@ const clean = (source: string): string => {
   display('Head Options :', header.options)
   display('Props :', props.block)
   display('Computed properties :', computedProps.block)
-  display('Remains :', remains)
+  display('Not processed :', unprocessed)
 
 })()

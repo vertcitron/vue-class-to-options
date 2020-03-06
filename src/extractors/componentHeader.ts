@@ -6,10 +6,10 @@ export interface HeaderOptions {
   [key: string]: string
 }
 
-export interface Options {
+export interface Header {
   components: string
   options: HeaderOptions
-  raw: string
+  chunks: string[]
 }
 
 const rawOptions = (source: string): HeaderOptions => {
@@ -37,30 +37,30 @@ const rawOptions = (source: string): HeaderOptions => {
   return options
 }
 
-export default (source: string): Options => {
-  const output: Options = {
+
+
+export default (source: string): Header => {
+  const output: Header = {
     components: '',
     options: {},
-    raw: ''
+    chunks: []
   }
 
-  const rawResult = /(@Component.*)export default/gs.exec(source)
-  if (!rawResult) return output
-  output.raw = rawResult[1]
-
-  const componentsResult = /components:[^}]*{([^}]*)}/gs.exec(output.raw)
-
-  let remains = output.raw
+  const chunksResult = /(@Component.*)export default/gs.exec(source)
+  if (!chunksResult) return output
+  const header = chunksResult[1]
+  const componentsResult = /components:[^}]*{([^}]*)}/gs.exec(header)
+  let unprocessed = header
   if (componentsResult) {
     output.components = '{ ' + componentsResult[1].split(',').map(s => s.trim()).join(', ') + ' }'
-    remains = removeChunk(output.raw, componentsResult[0])
+    unprocessed = removeChunk(header, componentsResult[0])
   }
-
-  const optionsResult = /@Component[^[a-z]*(.*)}\)[\n\s]*$/gs.exec(remains)
+  const optionsResult = /@Component[^[a-z]*(.*)}\)[\n\s]*$/gs.exec(unprocessed)
   if (optionsResult) {
     const optionsList = reIndent('    ' + optionsResult[1], 0)
     output.options = rawOptions(optionsList)
   }
+  if (header) output.chunks.push(header)
 
   return output
 }
