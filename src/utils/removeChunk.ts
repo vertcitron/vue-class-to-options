@@ -21,12 +21,13 @@ const removeChunkString = (source: string, chunk: string): string => {
 }
 
 const removeChunkArray = (source: string, chunks: string[]): string => {
+  const validChunks = chunks.filter(chunk => chunk.trim() !== '')
   if (chunks.length === 0) return source
   let output = source
-  for (const chunk of chunks) {
+  for (const chunk of validChunks) {
     output = removeChunkString(output, chunk)
   }
-  return output
+  return output.replace(/(\n *){2,}/gm, '\n\n')
 }
 
 const removeChunk = (source: string, chunks: string | string[]): string => {

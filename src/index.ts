@@ -8,10 +8,10 @@ import removeChunk from './utils/removeChunk'
 import script from './extractors/script'
 import staticImports from './extractors/staticImports'
 import reIndent from './utils/reIndent'
-import componentOptions from './extractors/componentOptions'
+import componentOptions from './extractors/headerOptions'
 import general from './extractors/general'
-import props from './extractors/props'
-import computed from './extractors/computed'
+import propDecorators from './extractors/propDecorators'
+import computedProperties from './extractors/computedProperties'
 
 const clean = (source: string): string => {
   return reIndent(source, 0).trim()
@@ -46,16 +46,11 @@ const clean = (source: string): string => {
   remains = generals.inner
 
   // props extraction
-  let propsList = props(remains)
-  let componentProps = ''
-  for (const prop of propsList) {
-    componentProps += prop.line + ',\n'
-    remains = removeChunk(remains, prop.raw)
-  }
-  componentProps.replace(/,\n$/, '')
+  let props = propDecorators(remains)
+  remains = removeChunk(remains, props.chunks)
 
   // computeds extraction
-  let computedProps = computed(remains)
+  let computedProps = computedProperties(remains, header.options)
   remains = removeChunk(remains, computedProps.chunks)
 
   display('Name :', generals.name)
@@ -64,7 +59,7 @@ const clean = (source: string): string => {
   display('Statics :', statics)
   display('Components :', header.components)
   display('Head Options :', header.options)
-  display('Props :', componentProps)
+  display('Props :', props.block)
   display('Computed properties :', computedProps.block)
   display('Remains :', remains)
 

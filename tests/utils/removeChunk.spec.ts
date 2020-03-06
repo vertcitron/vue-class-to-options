@@ -81,7 +81,7 @@ describe ('Remove Chunk function tests.', () => {
       expect(removeChunk('', [])).toBe('')
     })
 
-    it ('Should return source if array is empty or filled with ampty strings.', () => {
+    it ('Should return source if array is empty or filled with empty strings.', () => {
       expect(removeChunk('source\n', [])).toBe('source\n')
       expect(removeChunk('source\n', ['', ''])).toBe('source\n')
     })
@@ -98,6 +98,11 @@ describe ('Remove Chunk function tests.', () => {
 
     it ('Should return unchunked multiple lines source, with multiline chunks.', () => {
       expect(removeChunk(multilineSource3, chunks3)).toBe(multilineUnchunked3)
+    })
+
+    it ('Should remove multiple line ends from the result.', () => {
+      expect(removeChunk('first line\n\n\nsecond line\n\n\nthird line\n\n\n\nfourth', ['third line']))
+        .toBe('first line\n\nsecond line\n\nfourth')
     })
   })
 })

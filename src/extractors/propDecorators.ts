@@ -1,7 +1,8 @@
+import reIndent from "../utils/reIndent"
 
-export interface Prop {
-  raw: string
-  line: string
+export interface Props {
+  chunks: string[]
+  block: string
 }
 
 const transformer = (source: string): string => {
@@ -10,6 +11,8 @@ const transformer = (source: string): string => {
   const options = line.replace(/@Prop\s*\(/, '').replace(/\).*$/, '').trim()
   const type = line.replace(/@Prop\(.*\).*:\s*/, '').replace(/;\s*/, '').trim()
   let output = ''
+  // I wrote this, I know it works, but I'm no longer able to understand it...
+  // TODO: it really needs refacto !!!
   if (name) {
     output += name
     if (options) {
@@ -50,16 +53,17 @@ const transformer = (source: string): string => {
   return output
 }
 
-export default (source: string): Prop[] => {
-  let output: Prop[] = []
+export default (source: string): Props => {
+  let output: Props = {block: '', chunks: []}
   const searchProps = source.match(/@Prop\([^)]*\)\s*[^\n:]*(:\s+[^\n]*)?\s*/gs)
   if (searchProps) {
     for (const propRaw of searchProps) {
-      output.push({
-        raw: propRaw,
-        line: transformer(propRaw)
-      })
+      output.chunks.push(propRaw)
+      output.block += transformer(propRaw) + ',\n'
     }
+    output.block = 'props: {\n' + reIndent(output.block.replace(/,\n$/, ''), 2) + '\n}'
+    output.block = output.block.replace(/props: {\s*}/, '')
   }
-  return output
+  return output 
 }
+// ·

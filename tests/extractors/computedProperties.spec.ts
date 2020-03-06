@@ -1,4 +1,4 @@
-import computed from '../../src/extractors/computed'
+import computed from '../../src/extractors/computedProperties'
 
 const source =
 `protected prop: string
@@ -109,5 +109,24 @@ describe ('Computed extractor block output tests.', () => {
 
   it ('Real case test.', () => {
     expect(computed(source).block).toStrictEqual(blockOutput)
+  })
+
+  describe ('Computed extractor block output with header options.', () => {
+    it ('Should return empty with empty source and empty options.', () => {
+      expect(computed('', {}).block).toStrictEqual('')
+    })
+
+    it ('Should return empty with empty source and no computed option.', () => {
+      expect(computed('', { opt: 'lorem' }).block).toStrictEqual('')
+    })
+
+    it ('Should return option with empty source and computed option.', () => {
+      expect(computed('', { computed: 'lorem' }).block).toBe('computed: {\n  lorem\n}')
+    })
+
+    it ('Should return option with empty source and computed option.', () => {
+      expect(computed('', { computed: "{\n  ...mapGetters({\n    isMobile: 'breakpoint/isMobile'\n  })\n}" }).block)
+        .toBe("computed: {\n  ...mapGetters({\n    isMobile: 'breakpoint/isMobile'\n  })\n}")
+    })
   })
 })

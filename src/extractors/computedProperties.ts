@@ -1,17 +1,25 @@
 import getBlock from "../utils/getBlock"
 import reIndent from "../utils/reIndent"
+import { HeaderOptions } from './headerOptions'
 
 export interface Computeds {
   chunks: string[]
   block: string
 }
 
-export default (source: string): Computeds => {
+export default (source: string, headOptions: HeaderOptions = {}): Computeds => {
   const output: Computeds = {
     chunks: [],
     block: ''
   }
   let sum = ''
+  if (headOptions.computed) {
+    let head = headOptions.computed
+      .replace(/^{\n/gs, '')
+      .replace(/\n}$/gs, '')
+      .replace(/^ /gm, '')
+    if (head) sum += head + ',\n'
+  }
   const matches = source.match(/^ *get\s+[^(]*\(.*\)[^{]*{/gm)
   for (const match of matches ?? []) {
     const start = source.indexOf(match)

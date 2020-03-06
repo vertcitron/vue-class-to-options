@@ -2,13 +2,17 @@ import removeChunk from "../utils/removeChunk"
 import reIndent from "../utils/reIndent"
 import getBlock from "../utils/getBlock"
 
+export interface HeaderOptions {
+  [key: string]: string
+}
+
 export interface Options {
   components: string
-  options: object
+  options: HeaderOptions
   raw: string
 }
 
-const rawOptions = (source: string): object => {
+const rawOptions = (source: string): HeaderOptions => {
   if (!source.trim()) return {}
   const keys = source.match(/^[^ :,.}]*/gm)?.filter(item => item) || []
   const options = {}
