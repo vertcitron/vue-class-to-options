@@ -1,4 +1,4 @@
-import script from './script'
+import script from '../../src/extractors/script'
 
 const complexSource = `
 <script lang="ts">

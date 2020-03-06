@@ -1,4 +1,4 @@
-import beforeScript from './beforeScript'
+import beforeScript from '../../src/extractors/beforeScript'
 
 const emtyishSource =
 `

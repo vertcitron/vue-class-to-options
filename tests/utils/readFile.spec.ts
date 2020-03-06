@@ -1,4 +1,4 @@
-import readFile from './readFile'
+import readFile from '../../src/utils/readFile'
 import { readFileSync } from 'fs'
 
 describe('readFile tests.', () => {
@@ -9,6 +9,6 @@ describe('readFile tests.', () => {
   })
 
   it ('Should return the file content if the file exists', () => {
-    expect(readFile('src/tests/file/basicFile.vue')).toBe('basic content')
+    expect(readFile('tests/-files-/basicFile.vue')).toBe('basic content')
   })
 })

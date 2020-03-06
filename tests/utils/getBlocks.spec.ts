@@ -1,4 +1,4 @@
-import getBlock from './getBlock'
+import getBlock from '../../src/utils/getBlock'
 
 test ('Return nothing on empty string.', () => {
   expect(getBlock('')).toBe('')

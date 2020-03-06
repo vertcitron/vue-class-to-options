@@ -1,4 +1,4 @@
-import componentOptions from './componentOptions'
+import componentOptions from '../../src/extractors/componentOptions'
 
 const source0 =
 `@Component({

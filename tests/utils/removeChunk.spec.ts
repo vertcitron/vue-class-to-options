@@ -1,4 +1,4 @@
-import removeChunk from './removeChunk'
+import removeChunk from '../../src/utils/removeChunk'
 
 const multilineSource =
 `The multilined

@@ -1,4 +1,4 @@
-import staticImports from './staticImports'
+import staticImports from '../../src/extractors/staticImports'
 
 const emptySource =
 `<script>

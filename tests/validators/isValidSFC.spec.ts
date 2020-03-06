@@ -1,4 +1,4 @@
-import isValidSFC from './isValidSFC'
+import isValidSFC from '../../src/validators/isValidSFC'
 
 const complexValidSFC = `
 <template>

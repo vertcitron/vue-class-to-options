@@ -1,4 +1,4 @@
-import reIndent from './reIndent'
+import reIndent from '../../src/utils/reIndent'
 
 const chunkA0 = `{
   prop1: {

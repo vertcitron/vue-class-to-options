@@ -1,4 +1,4 @@
-import props from './props'
+import props from '../../src/extractors/props'
 
 const source =
 `@Prop({ type: [Boolean, String], default: false }) isScrolled: boolean | string;

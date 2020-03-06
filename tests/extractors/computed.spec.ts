@@ -1,4 +1,4 @@
-import computed from './computed'
+import computed from '../../src/extractors/computed'
 
 const source =
 `protected prop: string

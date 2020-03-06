@@ -1,4 +1,4 @@
-import isValidPath from './isValidPath'
+import isValidPath from '../../src/validators/isValidPath'
 
 describe ('Path validator tests.', () => {
   let logSpy: jest.SpyInstance<void, [any?, ...any[]]>
@@ -23,6 +23,6 @@ describe ('Path validator tests.', () => {
   })
   
   it ('Should return true if file ends with .vue and exists', () => {
-    expect(isValidPath('src/tests/file/basicFile.vue')).toBeTruthy()
+    expect(isValidPath('tests/-files-/basicFile.vue')).toBeTruthy()
   })
 })

@@ -1,4 +1,4 @@
-import general from './general'
+import general from '../../src/extractors/general'
 
 const source =
 `<script>
