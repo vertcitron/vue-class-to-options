@@ -37,8 +37,8 @@ const clean = (source: string): string => {
 
   // statics extraction
   let statics = staticImports(unprocessed)
-  unprocessed = removeChunk(unprocessed, statics)
-  statics = clean(statics)
+  unprocessed = removeChunk(unprocessed, statics.chunk)
+  statics = clean(statics.block)
   let header = componentHeader(unprocessed)
   unprocessed = removeChunk(unprocessed, header.chunks)
 

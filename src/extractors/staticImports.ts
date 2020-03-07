@@ -1,8 +1,13 @@
 import reIndent from "../utils/reIndent"
 
-export default (source: string): string => {
+export default (source: string): { block: string, chunk: string } => {
   if (!source.trim()) return ''
   const expression = /<script.*>(.*)@Component/gs
-  const output = expression.exec(source)
-  return output ? output[1] : ''
+  const extract = expression.exec(source)
+  const chunk = extract ? extract[1] : ''
+  const block = chunk.split('\n')
+    .filter(line => !line.includes('vue-property-decorator'))
+    .filter(line => !line.includes('vue-class-decorator'))
+    .join('\n')
+  return { block, chunk }
 }

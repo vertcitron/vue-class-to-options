@@ -30,6 +30,15 @@ get user (): UserInfo {
   return this.$store.getters['auth/user']
 }`
 
+const oneMethodAndDecorator =
+`helloWorld () {
+  return 'Hello World!'
+}
+
+@Watch user (new, old) => {
+  this.userChanged(new);
+}`
+
 const oneMethodBlock =
 `methods: {
   helloWorld () {
@@ -82,6 +91,11 @@ describe ('Methods extractor test suite.', () => {
       expect(methodsBlock(oneMethodAndGetter).chunks)
         .toStrictEqual([`helloWorld () {\n  return 'Hello World!'\n}`])
     })
+
+    it('Should not retain lines beginning with a decorator', () => {
+      expect(methodsBlock(oneMethodAndDecorator).chunks)
+        .toStrictEqual([`helloWorld () {\n  return 'Hello World!'\n}`])
+    })
   })
 
   describe ('Block tests.', () => {
@@ -111,6 +125,11 @@ describe ('Methods extractor test suite.', () => {
 
     it('Should return block with one method if source has one method and a getter', () => {
       expect(methodsBlock(oneMethodAndGetter).block).toBe(oneMethodBlock)
+    })
+
+    it('Should not retain lines beginning with a decorator', () => {
+      expect(methodsBlock(oneMethodAndDecorator).block)
+        .toStrictEqual(oneMethodBlock)
     })
   })
 })
