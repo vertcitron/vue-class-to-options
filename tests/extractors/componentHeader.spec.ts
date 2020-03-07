@@ -21,16 +21,26 @@ const source2 =
 `@Component({
   components: { Child },
   computed: {
-    ...mapGetters(['auth/service'])
+    ...mapGetters({
+      user: 'auth/user',
+      isLogged: 'auth/logged'
+    })
   }
 })
-export default`
+export default
+
+protected user: UserObject
+protected isLogged: boolean`
 
 const options2 = {
-  chunks: ["@Component({\n  components: { Child },\n  computed: {\n    ...mapGetters(['auth/service'])\n  }\n})\n"],
+  chunks: [
+    "@Component({\n  components: { Child },\n  computed: {\n    ...mapGetters({\n      user: 'auth/user',\n      isLogged: 'auth/logged'\n    })\n  }\n})\n",
+    'protected user: UserObject',
+    'protected isLogged: boolean'
+  ],
   components: '{ Child }',
   options: {
-    computed: "{\n  ...mapGetters(['auth/service'])\n}"
+    computed: "{\n  user (): UserObject {\n    return this.$store.getters['auth/user']\n  },\n  isLogged (): boolean {\n    return this.$store.getters['auth/logged']\n  }\n}"
   }
 }
 
@@ -58,20 +68,35 @@ describe ('Component Options extractor Tests.', () => {
     expect(componentOptions('\n  \n')).toStrictEqual({ chunks: [], components: '', options: {} })
   })
 
-  it ('Should return empty if @Component has no options.', () => {
+  it ('Should return empty if @Component has no options at all.', () => {
     expect(componentOptions('@Componentexport default'))
       .toStrictEqual({ chunks: ['@Component'], components: '', options: {} })
+  })
+
+  it ('Should return empty if @Component has no options at all with line breaks.', () => {
     expect(componentOptions('@Component\nexport default'))
       .toStrictEqual({ chunks: ['@Component\n'], components: '', options: {} })
+  })
+
+  it ('Should return empty if @Component has empty content.', () => {
     expect(componentOptions('@Component({})\nexport default'))
       .toStrictEqual({ chunks: ['@Component({})\n'], components: '', options: {} })
+  })
+
+  it ('Should return empty if @Component has empty content with line breaks.', () => {
     expect(componentOptions(source0))
       .toStrictEqual({ chunks: ['@Component({\n})\n'], components: '', options: {} })
   })
 
-  it ('Should return raw text options if it exists.', () => {
+  it ('Real test case #1.', () => {
     expect(componentOptions(source1)).toStrictEqual(options1)
+  })
+
+  it ('Real test case #2.', () => {
     expect(componentOptions(source2)).toStrictEqual(options2)
+  })
+
+  it ('Real test case #2.', () => {
     expect(componentOptions(source3)).toStrictEqual(options3)
   })
 })

@@ -58,7 +58,7 @@ const clean = (source: string): string => {
   display('Has semicolons :', generals.semi)
   display('Statics :', statics)
   display('Components :', header.components)
-  display('Head Options :', header.options)
+  // display('Head Options :', header.options)
   display('Props :', props.block)
   display('Computed properties :', computedProps.block)
   display('Not processed :', unprocessed)

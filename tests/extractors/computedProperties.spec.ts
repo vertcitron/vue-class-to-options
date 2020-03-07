@@ -94,7 +94,7 @@ describe ('Computed extractor block output tests.', () => {
 
   it ('Should return an array entry on multi line getter content.', () => {
     expect(computed('  get getter () {\n    return\n  }\n').block)
-      .toStrictEqual('computed: {\n  getter () {\n    return\n  }\n}')
+      .toStrictEqual('computed: {\n  getter () {\n      return\n    }\n}')
   })
 
   it ('Should return two array entries on multiple getters.', () => {

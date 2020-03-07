@@ -17,7 +17,7 @@ export default (source: string, headOptions: HeaderOptions = {}): Computeds => {
     let head = headOptions.computed
       .replace(/^{\n/gs, '')
       .replace(/\n}$/gs, '')
-      .replace(/^ /gm, '')
+      .replace(/^  /gm, '')
     if (head) sum += head + ',\n'
   }
   const matches = source.match(/^ *get\s+[^(]*\(.*\)[^{]*{/gm)
@@ -25,7 +25,7 @@ export default (source: string, headOptions: HeaderOptions = {}): Computeds => {
     const start = source.indexOf(match)
     const chunk = match + getBlock(source.substring(start)) + '}'
     output.chunks.push(chunk)
-    sum += reIndent(chunk, 0).replace(/^ *get\s+/, '').trim() + ',\n'
+    sum += chunk.replace(/^ *get\s+/, '').trim() + ',\n'
   }
   if (sum) {
     sum = sum.replace(/\,\n$/, '')
