@@ -38,7 +38,7 @@ const clean = (source: string): string => {
   // statics extraction
   let statics = staticImports(unprocessed)
   unprocessed = removeChunk(unprocessed, statics.chunk)
-  statics = clean(statics.block)
+  statics.block = clean(statics.block)
   let header = componentHeader(unprocessed)
   unprocessed = removeChunk(unprocessed, header.chunks)
 
@@ -61,7 +61,7 @@ const clean = (source: string): string => {
   let converted = before + '\n\n'
   const attributes = generals.attrs ? ` ${generals.attrs}` : ''
   converted += `<script${attributes}>\n`
-  converted += statics ? reIndent(statics, 2) : ''
+  converted += statics ? reIndent(statics.block, 2) : ''
   converted += '\n\n  export default Vue.extend ({\n'
   if (generals.name) converted += `    name: '${generals.name}',\n\n`
   if (header.components) converted += `    components: ${header.components},\n\n`
