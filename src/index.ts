@@ -12,6 +12,7 @@ import componentHeader from './extractors/componentHeader'
 import general from './extractors/general'
 import propDecorators from './extractors/propDecorators'
 import computedProperties from './extractors/computedProperties'
+import methodsBlock from './extractors/methodsBlock'
 
 const clean = (source: string): string => {
   return reIndent(source, 0).trim()
@@ -53,6 +54,10 @@ const clean = (source: string): string => {
   let computedProps = computedProperties(unprocessed, header.options)
   unprocessed = removeChunk(unprocessed, computedProps.chunks)
 
+  // methods extraction
+  let methods = methodsBlock(unprocessed)
+  unprocessed = removeChunk(unprocessed, methods.chunks)
+
   display('Name :', generals.name)
   display('Script attributes :', generals.attrs)
   display('Has semicolons :', generals.semi)
@@ -61,6 +66,7 @@ const clean = (source: string): string => {
   // display('Head Options :', header.options)
   display('Props :', props.block)
   display('Computed properties :', computedProps.block)
+  display('methods', methods.block)
   display('Not processed :', unprocessed)
 
 })()
