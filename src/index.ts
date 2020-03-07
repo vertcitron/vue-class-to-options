@@ -56,17 +56,27 @@ const clean = (source: string): string => {
 
   // methods extraction
   let methods = methodsBlock(unprocessed)
-  unprocessed = removeChunk(unprocessed, methods.chunks)
+  unprocessed = removeChunk(unprocessed, methods.chunks).trim()
 
-  display('Name :', generals.name)
-  display('Script attributes :', generals.attrs)
-  display('Has semicolons :', generals.semi)
-  display('Statics :', statics)
-  display('Components :', header.components)
-  // display('Head Options :', header.options)
-  display('Props :', props.block)
-  display('Computed properties :', computedProps.block)
-  display('methods', methods.block)
-  display('Not processed :', unprocessed)
+  let converted = before + '\n\n'
+  const attributes = generals.attrs ? ` ${generals.attrs}` : ''
+  converted += `<script${attributes}>\n`
+  converted += statics ? reIndent(statics, 2) : ''
+  converted += '\n\n  export default Vue.extend ({\n'
+  if (generals.name) converted += `    name: '${generals.name}',\n\n`
+  if (header.components) converted += `    components: ${header.components},\n\n`
+  if (props.block) converted += reIndent(props.block, 4) + ',\n\n'
+  if (computedProps.block) converted += reIndent(computedProps.block, 4) + ',\n\n'
+  if (methods.block) converted += reIndent(methods.block, 4) + '\n'
+  if (unprocessed) {
+    converted += '\n    /****************** UNPROCESSED LINES FROM ORIGINAL COMPONENT: ******************\n\n'
+    converted += reIndent(unprocessed, 6)
+    converted += '\n\n     ********************************************************************************/\n'
+  }
+  converted += '  )}'
+  converted += generals.semi ? ';\n' : '\n'
+  converted += '</script>\n'
+  if (after) converted += '\n' + after
 
+  display('Converted component =', converted)
 })()

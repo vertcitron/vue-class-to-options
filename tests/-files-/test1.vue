@@ -16,7 +16,8 @@
   @Component({
     components: {
       UserInfo,
-      Minicart
+      Minicart,
+      AAA
     },
     computed: {
       ...mapGetters({
@@ -39,6 +40,8 @@
     protected isTablet: boolean;
     protected isMobile: boolean;
 
+    user: UserInfo = {};
+
     get componentSize(): string {
       if (this.isMobile) {
         return 'small';
@@ -51,104 +54,18 @@
       return !!this.numberOfCartEntries;
     }
 
+    @Watch(watcher) {
+      zko&zpix,&z
+    }
+
     handleClick() {
       this.$emit('button-clicked');
     }
   }
 </script>
 
-<style
-  lang="scss"
-  scoped
->
-  .primary-header-right {
-    position: absolute;
-    right: 16px;
-    top: 0;
-    height: 100%;
-    display: flex;
-    align-items: center;
-  }
-
-  .header__user {
-    position: relative;
-    display: flex;
-    align-items: center;
-    width: 32px;
-    height: 100%;
-    margin-right: 8px;
-    background-color: transparent;
-  }
-
-  .minicart {
-
-    &-wrapper {
-      width: 32px;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: transparent;
-      height: 100%;
-    }
-
-    &-overlay {
-      position: absolute;
-      top: calc(50% + 26px);
-      right: -12px;
-      display: none;
-    }
-  }
-
-  @include tablet-up {
-
-    .minicart {
-
-      &-wrapper {
-        border-left: none;
-
-        ::v-deep .icon-label {
-          display: none;
-        }
-      }
-    }
-  }
-
-  @include desktop-up {
-
-    .primary-header-right {
-      right: 32px;
-      flex-flow: row nowrap;
-    }
-
-    .header__user {
-      width: auto;
-      margin-right: 24px;
-    }
-
-    .minicart-wrapper {
-      width: auto;
-
-      &.active:hover {
-
-        .minicart-overlay {
-          display: block;
-        }
-      }
-
-      &.scrolled {
-        height: 80px;
-      }
-
-      ::v-deep .icon-label {
-        display: block;
-      }
-
-      ::v-deep .icon-link {
-        display: flex;
-        flex-flow: row nowrap;
-        align-items: center;
-      }
-    }
+<style lang="scss" scoped>
+  .component {
+    font-size: 14px;
   }
 </style>

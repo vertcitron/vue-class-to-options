@@ -8,7 +8,7 @@ interface Methods {
 
 export default (source: string): Methods => {
   const output: Methods = { block: '', chunks: [] }
-  const methodLines = source.match(/^(?! )(?!get).*{$/gm)
+  const methodLines = source.match(/^(?! )(?!get)(?!@).*{$/gm)
   for (const line of methodLines ?? []) {
     let chunk = source.substring(source.indexOf(line))
     let end = chunk.indexOf('\n}')
