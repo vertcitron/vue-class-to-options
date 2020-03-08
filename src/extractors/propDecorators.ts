@@ -38,7 +38,7 @@ const transformer = (source: string): string => {
                   const pattern = multiple[0].replace('type: ', '')
                   output = output.replace(pattern, `${pattern} as PropType<${type}>`)
                 } else {
-                  output += ` // as PropType<${type}>`
+                  output += `, // as PropType<${type}>`
                 }
               }
             }
@@ -47,7 +47,7 @@ const transformer = (source: string): string => {
       }
     } else {
       const type = line.match(/:.*$/)
-      if (type) output += ` // as PropType<${type[0].replace(': ', '').replace(/;\s*/, '').trim()}>`
+      if (type) output += `, // as PropType<${type[0].replace(': ', '').replace(/;\s*/, '').trim()}>`
     }
   }
   return output
@@ -66,4 +66,3 @@ export default (source: string): Props => {
   }
   return output 
 }
-// ·

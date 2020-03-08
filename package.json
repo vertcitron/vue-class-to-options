@@ -14,7 +14,7 @@
   "scripts": {
     "build": "parcel build src/index.ts --target node",
     "watch": "parcel watch src/index.ts --target node",
-    "dev": "ts-node-dev --respawn --clear --watch tests/-files-/test1.vue src/index.ts ./tests/-files-/test1.vue",
+    "dev": "ts-node-dev --respawn --clear src/index.ts",
     "test": "jest"
   },
   "devDependencies": {

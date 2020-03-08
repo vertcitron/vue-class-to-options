@@ -16,8 +16,7 @@
   @Component({
     components: {
       UserInfo,
-      Minicart,
-      AAA
+      Minicart
     },
     computed: {
       ...mapGetters({

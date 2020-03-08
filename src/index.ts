@@ -2,6 +2,7 @@ import title from './display/title'
 import display from './display/displayOption'
 import isValidPath from './validators/isValidPath'
 import readFile from './utils/readFile'
+import saveFile from './utils/saveFile'
 import isValidSFC from './validators/isValidSFC'
 import beforeScript from './extractors/beforeScript'
 import removeChunk from './utils/removeChunk'
@@ -73,10 +74,12 @@ const clean = (source: string): string => {
     converted += reIndent(unprocessed, 6)
     converted += '\n\n     ********************************************************************************/\n'
   }
-  converted += '  )}'
+  converted += '  })'
   converted += generals.semi ? ';\n' : '\n'
   converted += '</script>\n'
   if (after) converted += '\n' + after
 
   display('Converted component =', converted)
+
+  saveFile(converted, filePath)
 })()
