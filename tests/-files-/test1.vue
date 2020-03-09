@@ -11,7 +11,7 @@
   import { Component, Prop } from 'vue-property-decorator';
   import { mapGetters } from 'vuex';
   import Minicart from '@/components/molecules/minicart/Minicart.vue';
-  import UserInfo from '@/components/organisms/user-info/UserInfo.vue';()
+  import UserInfo from '@/components/organisms/user-info/UserInfo.vue';
 
   @Component({
     components: {
@@ -37,7 +37,7 @@
     size: string;
 
     protected isTablet: boolean;
-    protected isMobile: boolean;
+    protected isMobile: number;
 
     user: UserInfo = {};
 
