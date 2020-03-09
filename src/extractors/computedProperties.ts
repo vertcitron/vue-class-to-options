@@ -15,7 +15,7 @@ export default (source: string, headOptions: HeaderOptions = {}): Computeds => {
   let sum = ''
   if (headOptions.computed) {
     let head = headOptions.computed
-      .replace(/^{\n/gs, '')
+      .replace(/^\{\n/gs, '')
       .replace(/\n}$/gs, '')
       .replace(/^  /gm, '')
     if (head) sum += head + ',\n'

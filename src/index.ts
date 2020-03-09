@@ -14,12 +14,15 @@ import general from './extractors/general'
 import propDecorators from './extractors/propDecorators'
 import computedProperties from './extractors/computedProperties'
 import methodsBlock from './extractors/methodsBlock'
+import dataParser from './extractors/dataParser'
 
 const clean = (source: string): string => {
   return reIndent(source, 0).trim()
 }
 
 (async () => {
+  const startTime = Date.now()
+
   await title('Class To Options', 'greenBright')
 
   // File content extraction and validation
@@ -59,15 +62,21 @@ const clean = (source: string): string => {
   let methods = methodsBlock(unprocessed)
   unprocessed = removeChunk(unprocessed, methods.chunks).trim()
 
+  // data extraction
+  let datas = dataParser(unprocessed, generals.name)
+  unprocessed = removeChunk(unprocessed, datas.chunks).trim()
+
   let converted = before + '\n\n'
   const attributes = generals.attrs ? ` ${generals.attrs}` : ''
   converted += `<script${attributes}>\n`
-  converted += statics ? reIndent(statics.block, 2) : ''
-  converted += '\n\n  export default Vue.extend ({\n'
+  converted += statics ? reIndent(statics.block, 2) + '\n\n': ''
+  if (datas.interface) converted += '\n' + reIndent(datas.interface, 2) + '\n'
+  converted += '  export default Vue.extend ({\n'
   if (generals.name) converted += `    name: '${generals.name}',\n\n`
   if (header.components) converted += `    components: ${header.components},\n\n`
   if (props.block) converted += reIndent(props.block, 4) + ',\n\n'
   if (computedProps.block) converted += reIndent(computedProps.block, 4) + ',\n\n'
+  if (datas.block) converted += reIndent(datas.block, 4) + ',\n\n'
   if (methods.block) converted += reIndent(methods.block, 4) + '\n'
   if (unprocessed) {
     converted += '\n    /****************** UNPROCESSED LINES FROM ORIGINAL COMPONENT: ******************\n\n'
@@ -79,7 +88,9 @@ const clean = (source: string): string => {
   converted += '</script>\n'
   if (after) converted += '\n' + after
 
-  display('Converted component =', converted)
-
   saveFile(converted, filePath)
+
+  const endTime = Date.now()
+  console.log(`  Done in ${endTime - startTime} ms.`)
+  console.log(`  Converted file is saved at ${filePath.replace('.vue', '.optionsAPI.vue')}\n\n`)
 })()

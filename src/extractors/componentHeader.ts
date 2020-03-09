@@ -61,7 +61,7 @@ const optionsTyping = (source: string): Typing[] => {
 const extractGetters = (source: string, typings: Typing[] = []): { functions: string, chunks: string[] } => {
   let output: string = ''
   let chunks: string[] = []
-  const expression = /\.{3}mapGetters\s*\({\n*([^\)]*)}\)/gs
+  const expression = /\.{3}mapGetters\s*\(\{\n*([^\)]*)\}\)/gs
   const gettersBlock = expression.exec(source)
   if (gettersBlock) {
     chunks.push('  ' + gettersBlock[0])
@@ -95,7 +95,7 @@ export default (source: string): Header => {
   const chunksResult = /(@Component.*)export default/gs.exec(source)
   if (!chunksResult) return output
   const header = chunksResult[1]
-  const componentsResult = /components:[^}]*{([^}]*)}/gs.exec(header)
+  const componentsResult = /components:[^}]*\{([^}]*)}/gs.exec(header)
   let unprocessed = header
   if (componentsResult) {
     output.components = '{ ' + componentsResult[1].split(',').map(s => s.trim()).join(', ') + ' }'

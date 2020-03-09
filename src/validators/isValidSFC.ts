@@ -14,11 +14,11 @@ export default (source: string): boolean => {
     displayError('The source file does not contain an @Component decorator.')
     return false
   }
-  if (!source.match(/export default class .* extends Vue {.*}/gs)) {
+  if (!source.match(/export default class .* extends Vue \{.*\}/gs)) {
     displayError('The source file does not contain an @Component decorator.')
     return false
   }
-  if (source.match(/<script.*>.*@Component.*export default class .* extends Vue {.*}.*<\/script>/gs)) {
+  if (source.match(/<script.*>.*@Component.*export default class .* extends Vue \{.*}.*<\/script>/gs)) {
     return true
   }
   displayError('Unknown component validation error.')
