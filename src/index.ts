@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import title from './display/title'
 import display from './display/displayOption'
 import isValidPath from './validators/isValidPath'

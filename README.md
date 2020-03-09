@@ -1,7 +1,13 @@
 # Vue Component Class API To Options API
 
+[![License](https://img.shields.io/npm/l/vue-class-to-options)](https://github.com/vertcitron/vue-class-to-options)
+[![Version](https://img.shields.io/npm/v/vue-class-to-options)](https://github.com/vertcitron/vue-class-to-options)
+[![Issues](https://img.shields.io/github/issues/vertcitron/vue-class-to-options)](https://github.com/vertcitron/vue-class-to-options/issues)
+[![Downloads](https://img.shields.io/npm/dm/vue-class-to-options)](https://www.npmjs.com/package/vue-class-to-options)
+
 As I needed it on a project with a lot of Class API components, I made this little utility that tries to converts
-Vue Single File Components written in Class API to the same component in Options API.
+Vue Single File Components written in Class API (with the help of `vue-class-component`and `vue-property-decorator`)
+to the same component written with Options API.
 
 This utility could be the base for a future thing able to cross-convert between Class, Options and Composition APIs.
 
@@ -11,13 +17,19 @@ which are written aside originals, with an `.optionsAPI.vue` extension.
 
 ## Installation and usage
 
-On the project where you need it *(here not recorded in package.json, check by yourself if you think you need it)*:
+Install the package globally, then launch it giving as parameter the path to the file to convert, relative to where
+the command has been launched:
 
-`npm install vue-class-to-options` then `npx vue-class-to-options path/to/file/toConvert.vue`
+`npm --global install vue-class-to-options` then `classToOptions path/to/file/toConvert.vue`
 
 or with yarn :
 
-`yarn add vue-class-to-options` then `yarn vue-class-to-options path/to/file/toConvert.vue`
+`yarn global add vue-class-to-options` then `classToOptions path/to/file/toConvert.vue`
+
+Errors will be displayed if the file does not exists, if it's not a Vue file and if it's not a Class API Component.
+In case of success, the original file remains untouched, and a new file is saved alongside it, named with the format
+`sameBaseName.optionsAPI.vue`. When you carefully checked what has been done and handled the unprocessed parts, you can
+rename the original file to something else, then rename the new file as the original one, and then launch your tests.
 
 ## Output
 
@@ -62,13 +74,14 @@ https://github.com/vertcitron/vue-class-to-options/issues. I promise to handle t
 depend on their content and the time left by my other stuffs.
 
 You're also welcome to contribute if you feel it. In this case, after forking and dependances install (`npm install` or
-`yarn`), you can launch via some quite standard commands :
+`yarn`), you can launch via some common commands :
 
 - `npm run build` (or `yarn build`) to build the bundle (in `dist/index.js`).
 - `npm run watch` (or `yarn watch`) to build in watch mode.
-- `npm run start` (or `yarn start`) to build add launch after build : add at end of CLI the file path you want to
+- `npm run start` (or `yarn start`) to build and launch after build : add at end of CLI the file path you want to
 convert.
 - `npm run dev` (or `yarn dev`) to start it via ts-node, without bundling. You also have to add a .vue file in the CLI.
+Permits to restart the utility on each watch trigger.
 - `npm run test` (or `yarn test`) to launch unit tests, all located in the `tests`directory.
 
 This node package is coded in Typescript 3.8 and bundled with parcel-bundler.

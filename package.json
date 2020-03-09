@@ -7,6 +7,10 @@
   "files": [
     "dist"
   ],
+  "bin": {
+    "classToOptions": "./dist/index.js"
+  },
+  "preferGlobal": true,
   "repository": "https://github.com/vertcitron/vue-class-to-options.git",
   "author": "Stéphane Souron <stef@vertcitron.fr>",
   "license": "MIT",
