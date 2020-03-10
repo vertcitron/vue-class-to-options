@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import title from './display/title'
 import display from './display/displayOption'
 import isValidPath from './validators/isValidPath'
@@ -95,4 +97,4 @@ const classToOptions = async () => {
   console.log(`  Converted file is saved at ${filePath.replace('.vue', '.optionsAPI.vue')}\n\n`)
 }
 
-exports.classToOptions = classToOptions
+classToOptions()

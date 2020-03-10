@@ -8,7 +8,7 @@
     "dist"
   ],
   "bin": {
-    "classToOptions": "./dist/index.js"
+    "classToOptions": "./bin/classToOptions.js"
   },
   "preferGlobal": true,
   "repository": "https://github.com/vertcitron/vue-class-to-options.git",
@@ -16,7 +16,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "build": "parcel build src/index.ts --target node",
+    "build": "parcel build src/index.ts --target node --no-minify",
     "watch": "parcel watch src/index.ts --target node",
     "start": "yarn build && node bin/classToOptions.js",
     "dev": "ts-node-dev --respawn --clear src/run.ts",
