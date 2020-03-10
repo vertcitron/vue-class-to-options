@@ -1,6 +1,6 @@
 {
   "name": "vue-class-to-options",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "An utility to convert Vue.js Single File Components from Class API to option API.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
