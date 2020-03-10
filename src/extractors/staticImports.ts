@@ -6,10 +6,12 @@ export default (source: string): { block: string, chunk: string } => {
   const extract = expression.exec(source)
   let chunk = extract ? extract[1] : ''
   chunk = chunk.replace(/^\n/s, '').trimEnd()
-  const block = chunk.split('\n')
+  let block = chunk.split('\n')
     .filter(line => !line.includes('vue-property-decorator'))
     .filter(line => !line.includes('vue-class-decorator'))
+    .filter(line => !line.includes('import Vue'))
     .join('\n')
     .trimEnd()
+  block = `  import Vue, { PropType } from 'vue';\n` + block
   return { block, chunk }
 }
