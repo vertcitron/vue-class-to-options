@@ -1,9 +1,12 @@
 # Vue Component Class API To Options API
 
-[![License](https://img.shields.io/npm/l/vue-class-to-options)](https://github.com/vertcitron/vue-class-to-options)
 [![Version](https://img.shields.io/npm/v/vue-class-to-options)](https://github.com/vertcitron/vue-class-to-options)
+&nbsp;&nbsp;
+[![License](https://img.shields.io/npm/l/vue-class-to-options)](https://github.com/vertcitron/vue-class-to-options)
+&nbsp;&nbsp;
 [![Issues](https://img.shields.io/github/issues/vertcitron/vue-class-to-options)](https://github.com/vertcitron/vue-class-to-options/issues)
-[![Downloads](https://img.shields.io/npm/dm/vue-class-to-options)](https://www.npmjs.com/package/vue-class-to-options)
+&nbsp;&nbsp;
+[![Downloads](https://img.shields.io/npm/dt/vue-class-to-options)](https://www.npmjs.com/package/vue-class-to-options)
 
 As I needed it on a project with a lot of Class API components, I made this little utility that tries to converts
 Vue Single File Components written in Class API (with the help of `vue-class-component`and `vue-property-decorator`)
@@ -84,7 +87,7 @@ convert.
 Permits to restart the utility on each watch trigger.
 - `npm run test` (or `yarn test`) to launch unit tests, all located in the `tests`directory.
 
-This node package is coded in Typescript 3.8 and bundled with parcel-bundler.
+This node package is coded with Typescript 3.8 and is actually not bundled, maybe this will be done later.
 
-When contributing, please submit your PRs under the master branch of the original repo, and before it make sure all
-tests are passing.
+When contributing, please submit your PRs under the master branch of the original repo, and before submitting make
+sure all tests are passing.
