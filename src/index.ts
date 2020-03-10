@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import title from './display/title'
 import display from './display/displayOption'
 import isValidPath from './validators/isValidPath'
@@ -22,7 +20,7 @@ const clean = (source: string): string => {
   return reIndent(source, 0).trim()
 }
 
-(async () => {
+const classToOptions = async () => {
   const startTime = Date.now()
 
   await title('Class To Options', 'greenBright')
@@ -95,4 +93,8 @@ const clean = (source: string): string => {
   const endTime = Date.now()
   console.log(`  Done in ${endTime - startTime} ms.`)
   console.log(`  Converted file is saved at ${filePath.replace('.vue', '.optionsAPI.vue')}\n\n`)
-})()
+}
+
+export default classToOptions
+
+exports.classToOptions = classToOptions
