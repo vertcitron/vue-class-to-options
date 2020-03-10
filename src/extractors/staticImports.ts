@@ -1,7 +1,7 @@
 import reIndent from "../utils/reIndent"
 
 export default (source: string): { block: string, chunk: string } => {
-  if (!source.trim()) return { block: '', chunk: '' }
+  if (!source.trim()) return { block: `import Vue, { PropType } from 'vue'\n`, chunk: '' }
   const expression = /<script.*>(.*)@Component/gs
   const extract = expression.exec(source)
   let chunk = extract ? extract[1] : ''
@@ -12,6 +12,6 @@ export default (source: string): { block: string, chunk: string } => {
     .filter(line => !line.includes('import Vue'))
     .join('\n')
     .trimEnd()
-  block = `  import Vue, { PropType } from 'vue';\n` + block
+  block = `import Vue, { PropType } from 'vue'\n` + block
   return { block, chunk }
 }

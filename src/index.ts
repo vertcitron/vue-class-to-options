@@ -88,6 +88,8 @@ const classToOptions = async () => {
   converted += '</script>\n'
   if (after) converted += '\n' + after
 
+  converted = converted.replace(/^\s+$/gm, '\n').replace(/\n{3,}/gs, '\n')
+
   saveFile(converted, filePath)
 
   const endTime = Date.now()
