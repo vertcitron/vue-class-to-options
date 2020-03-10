@@ -3,7 +3,8 @@
   "version": "0.0.8",
   "description": "An utility to convert Vue.js Single File Components from Class API to option API.",
   "files": [
-    "dist"
+    "dist",
+    "bin"
   ],
   "bin": {
     "classToOptions": "./bin/classToOptions.js"
