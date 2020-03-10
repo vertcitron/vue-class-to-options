@@ -10,7 +10,7 @@
   import Vue from 'vue';
   import { mapGetters } from 'vuex';
   import Minicart from '@/components/molecules/minicart/Minicart.vue';
-  import UserInfo from '@/components/organisms/user-info/UserInfo.vue';()
+  import UserInfo from '@/components/organisms/user-info/UserInfo.vue';
 
 
   interface MyComponentModel {
