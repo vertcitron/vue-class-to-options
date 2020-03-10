@@ -95,6 +95,4 @@ const classToOptions = async () => {
   console.log(`  Converted file is saved at ${filePath.replace('.vue', '.optionsAPI.vue')}\n\n`)
 }
 
-export default classToOptions
-
 exports.classToOptions = classToOptions

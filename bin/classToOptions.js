@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 
-const Converter = require('../dist/index')
+const converter = require('../dist/index')
 
-Converter.classToOptions()
+converter.classToOptions()
