@@ -8,9 +8,8 @@ interface Methods {
 
 export default (source: string): Methods => {
   const output: Methods = { block: '', chunks: [] }
-  const methodLines = source.match(/^(?! )(?!@)(?!get)(?!beforeCreate)(?!created)(?!beforeMount)(?!mounted)(?!beforeUpdate)(?!updated)(?!beforeDestroy)(?!destroyed).*{$/gm)
+  const methodLines = source.match(/^(?! )(?!@)(?!get )(?!beforeCreate)(?!created)(?!beforeMount)(?!mounted)(?!beforeUpdate)(?!updated)(?!beforeDestroy)(?!destroyed)(?!if).*{$/gm)
   for (const line of methodLines ?? []) {
-    console.log(line)
     let chunk = source.substring(source.indexOf(line))
     let end = chunk.indexOf('\n}')
     if (end > -1) {

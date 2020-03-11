@@ -17,7 +17,8 @@ const validSource =
 const validStatics = {
   block: `import Vue, { PropType } from 'vue'
 
-  const CONST = 0`,
+const CONST = 0
+`,
   chunk: `  import Vue from 'vue'
 
   const CONST = 0`
@@ -39,7 +40,7 @@ describe ('Static and Imports extractor Tests.', () => {
 
   it ("Should return statics and imports as they're given.", () => {
     expect(staticImports('<script>imports@Component</script>'))
-      .toStrictEqual({ block: emptyBlock + 'imports', chunk: 'imports' })
+      .toStrictEqual({ block: emptyBlock + 'imports\n', chunk: 'imports' })
     expect(staticImports(validSource)).toStrictEqual(validStatics)
   })
 })

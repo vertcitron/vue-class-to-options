@@ -3,11 +3,12 @@ const isString = (s: string | string[]): s is string => {
 }
 
 const isStringArray = (s: string | string[]): s is string[] => {
-  return (s as string[]).push !== undefined
+  return Array.isArray(s)
 }
 
 const removeChunkString = (source: string, chunk: string): string => {
   if (!chunk.trim()) return source
+  if (chunk === '@Component') console.log('removing @Component')
   const start = source.indexOf(chunk)
   if (start === -1) {
     return source
@@ -24,10 +25,11 @@ const removeChunkArray = (source: string, chunks: string[]): string => {
   const validChunks = chunks.filter(chunk => chunk.trim() !== '')
   if (chunks.length === 0) return source
   let output = source
+  let flag = false
   for (const chunk of validChunks) {
     output = removeChunkString(output, chunk)
   }
-  return output.replace(/(\n *){2,}/gm, '\n\n')
+  return output.replace(/\n{2,}/gm, '\n\n')
 }
 
 const removeChunk = (source: string, chunks: string | string[]): string => {

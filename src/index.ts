@@ -44,7 +44,7 @@ const classToOptions = async () => {
   unprocessed = removeChunk(unprocessed, statics.chunk)
   statics.block = clean(statics.block)
   let header = componentHeader(unprocessed)
-  unprocessed = removeChunk(unprocessed, header.chunks)
+  unprocessed = removeChunk(unprocessed, header.chunks.map(chunk => chunk.trimEnd()))
 
   // general setup extraction
   let generals = general(unprocessed)
@@ -88,7 +88,7 @@ const classToOptions = async () => {
   converted += '</script>\n'
   if (after) converted += '\n' + after
 
-   saveFile(converted, filePath)
+  saveFile(converted, filePath)
 
   const endTime = Date.now()
   console.log(`  Done in ${endTime - startTime} ms.`)

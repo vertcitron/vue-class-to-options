@@ -10,12 +10,13 @@ export default (source: string): { block: string, chunk: string } => {
     .filter(line => !line.includes('vue-property-decorator'))
     .filter(line => !line.includes('vue-class-decorator'))
     .filter(line => !line.includes('import Vue'))
+    .map(line => line.trim())
     .join('\n')
     .trimEnd()
   const hasSemi: boolean = chunk.split('\n')[0].slice(-1) === ';'
-  let block = `  import Vue, { PropType } from 'vue'`
+  let block = `import Vue, { PropType } from 'vue'`
   block += hasSemi ? ';\n' : '\n'
   block += extracted
-  block += '\n'
+  block = block.trim() + '\n'
   return { block, chunk }
 }

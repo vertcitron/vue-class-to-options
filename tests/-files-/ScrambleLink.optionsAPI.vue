@@ -59,6 +59,13 @@
     }),
 
     methods: {
+      getScrambled() {
+        if (this.dataHref && (this.dataHref as string).replace) {
+          return (this.dataHref as string).replace(this.regex, this.obfuscation);
+        }
+        // TODO : handle RouterLocation case
+        return this.dataHref;
+      },
       isExternalLink() {
         if (this.dataHref && (this.dataHref as string).includes) {
           return (
@@ -73,17 +80,11 @@
         // If not, an external link is forced, in order to go to the legacy site.
         const to = this.$router.resolve(dataHref);
 
-      if (to && to.resolved && to.resolved.name) {
+        if (to && to.resolved && to.resolved.name) {
           return routeExist(to.resolved.name);
         }
 
-      return false;
-      },
-      if (to && to.resolved && to.resolved.name) {
-          return routeExist(to.resolved.name);
-        }
-
-      return false;
+        return false;
       },
       hasLink() {
         return this.dataHref && this.dataHref !== '' && this.dataHref !== {};
@@ -94,14 +95,6 @@
 
       mounted() {
         this.bool = false;
-      }
-
-      getScrambled() {
-        if (this.dataHref && (this.dataHref as string).replace) {
-          return (this.dataHref as string).replace(this.regex, this.obfuscation);
-        }
-        // TODO : handle RouterLocation case
-        return this.dataHref;
       }
 
      ********************************************************************************/
