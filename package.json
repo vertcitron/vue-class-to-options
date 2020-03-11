@@ -18,7 +18,7 @@
     "build": "tsc",
     "watch": "yarn build && tsc --watch",
     "start": "yarn build && node bin/classToOptions.js",
-    "dev": "ts-node-dev --respawn --clear src/index.ts",
+    "dev": "ts-node-dev --respawn --clear src/run.ts",
     "test": "jest"
   },
   "devDependencies": {

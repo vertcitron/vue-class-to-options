@@ -69,8 +69,8 @@ const classToOptions = async () => {
   let converted = before + '\n\n'
   const attributes = generals.attrs ? ` ${generals.attrs}` : ''
   converted += `<script${attributes}>\n`
-  converted += statics ? reIndent(statics.block, 2) + '\n\n': ''
-  if (datas.interface) converted += '\n' + reIndent(datas.interface, 2) + '\n'
+  converted += statics.chunk ? reIndent(statics.block, 2) + '\n\n': ''
+  if (datas.interface) converted += reIndent(datas.interface, 2) + '\n\n'
   converted += '  export default Vue.extend ({\n'
   if (generals.name) converted += `    name: '${generals.name}',\n\n`
   if (header.components) converted += `    components: ${header.components},\n\n`
@@ -88,9 +88,7 @@ const classToOptions = async () => {
   converted += '</script>\n'
   if (after) converted += '\n' + after
 
-  converted = converted.replace(/^\s+$/gm, '\n').replace(/\n{3,}/gs, '\n')
-
-  saveFile(converted, filePath)
+   saveFile(converted, filePath)
 
   const endTime = Date.now()
   console.log(`  Done in ${endTime - startTime} ms.`)
